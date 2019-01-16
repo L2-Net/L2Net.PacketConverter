@@ -54,16 +54,20 @@ namespace L2Net.PacketConverter.UI
                 switch (Mode)
                 {
                     case ConvertMode.Byte:
-                        value = Convert.FromByteToHex(rtbxPlain.Text);
+                        var bytee = GetIntSafe(rtbxPlain.Text, System.Convert.ToByte, byte.MaxValue);
+                        value = Convert.FromByteToHex(bytee);
                         break;
                     case ConvertMode.Int16:
-                        value = Convert.FromInt16ToHex(System.Convert.ToInt16(rtbxPlain.Text));
+                        var int16 = GetIntSafe(rtbxPlain.Text, System.Convert.ToInt16, Int16.MaxValue);
+                        value = Convert.FromInt16ToHex(int16);
                         break;
                     case ConvertMode.Int32:
-                        value = Convert.FromInt32ToHex(System.Convert.ToInt32(rtbxPlain.Text));
+                        var int32 = GetIntSafe(rtbxPlain.Text, System.Convert.ToInt32, int.MaxValue);
+                        value = Convert.FromInt32ToHex(int32);
                         break;
                     case ConvertMode.Int64:
-                        value = Convert.FromInt64ToHex(System.Convert.ToInt64(rtbxPlain.Text));
+                        var int64 = GetIntSafe(rtbxPlain.Text, System.Convert.ToInt64, Int64.MaxValue);
+                        value = Convert.FromInt64ToHex(int64);
                         break;
                     case ConvertMode.String:
                         value = Convert.FromStringToHex(rtbxPlain.Text);
@@ -76,6 +80,20 @@ namespace L2Net.PacketConverter.UI
                 rtbxHex.Text = value;
             }
             LastSender = sender as RichTextBox;
+        }
+
+        private T GetIntSafe<T>(string text, Func<string, T> fun, T fallback)
+        {
+            T int16;
+            try
+            {
+                int16 = fun.Invoke(text);
+            }
+            catch (OverflowException)
+            {
+                int16 = fallback;
+            }
+            return int16;
         }
 
         private void rbtn_CheckedChanged(object sender, EventArgs e)

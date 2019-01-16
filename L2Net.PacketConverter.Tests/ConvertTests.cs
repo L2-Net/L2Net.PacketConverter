@@ -6,28 +6,33 @@ namespace L2Net.PacketConverter.Tests
     [TestClass]
     public class ConvertTests
     {
-        [DataRow("52", "82")]
-        public void FromByteToHexTest(string expected, string input)
+        [DataRow("52", 82)]
+        public void FromByteToHexTest(string expected, byte input)
         {
             Assert.AreEqual(expected, Convert.FromByteToHex(input));
         }
 
-        [TestMethod]
-        public void FromInt16ToHexTest()
+        [DataRow("52 00", 82)]
+        [DataRow("FF FF", 99999999)]
+        public void FromInt16ToHexTest(string expected, byte bytee)
         {
-            Assert.AreEqual("52 00", Convert.FromInt16ToHex(82));
+            Assert.AreEqual(expected, Convert.FromInt16ToHex(bytee));
         }
 
-        [TestMethod]
-        public void FromInt32ToHexTest()
+        [DataRow("52 00 00 00", 82)]
+        [DataRow("52 00 6F 00", 7274578)]
+        [DataRow("FF FF FF F7", 4294967295)]
+        public void FromInt32ToHexTest(string expected, int int32)
         {
-            Assert.AreEqual("52 00 00 00", Convert.FromInt32ToHex(82));
+            Assert.AreEqual(expected, Convert.FromInt32ToHex(int32));
         }
 
-        [TestMethod]
-        public void FromInt64ToHexTest()
+        [DataRow("52 00 00 00 00 00 00 00", 7274578)]
+        [DataRow("FF FF C0 6F F2 86 23 00", 9999999999999999)]                                            
+        [DataRow("FF FF FF FF FF FF FF F7", 9223372036854775807)]
+        public void FromInt64ToHexTest(string expected, System.Int64 int64)
         {
-            Assert.AreEqual("52 00 00 00 00 00 00 00", Convert.FromInt64ToHex(82));
+            Assert.AreEqual(expected, Convert.FromInt64ToHex(int64));
         }
 
         [DataTestMethod]
@@ -48,7 +53,7 @@ namespace L2Net.PacketConverter.Tests
 
         [DataTestMethod]
         [DataRow(76, "4C")]
-        [DataRow(76, "4C 00 32 00 4E 00 65 00 74 00 52 00 6F 00 63 00 6B 00")]
+        [DataRow(3276876, "4C 00 32 00 4E 00 65 00 74 00 52 00 6F 00 63 00 6B 00")]
         public void FromHexToInt32Test(int expected, string hex)
         {
             Assert.AreEqual(expected, Convert.FromHexToInt32(hex));
