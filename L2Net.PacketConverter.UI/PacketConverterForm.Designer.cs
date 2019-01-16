@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PacketConverterForm));
             this.rtbxHex = new System.Windows.Forms.RichTextBox();
             this.rtbxPlain = new System.Windows.Forms.RichTextBox();
             this.rbtnByte = new System.Windows.Forms.RadioButton();
@@ -156,6 +157,7 @@
             this.Controls.Add(this.rbtnByte);
             this.Controls.Add(this.rtbxPlain);
             this.Controls.Add(this.rtbxHex);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(568, 264);
             this.MinimumSize = new System.Drawing.Size(568, 264);
